@@ -15,25 +15,26 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="form-group">
-                    {!! Form::open(['url' => "/states/$state->id", 'method' => 'put']) !!}
+                    {!! Form::open(['url' => "/states/$state->id", 'method' => 'put', 'class' => 'form-group col-10']) !!}
                         
                         {{ Form::label('name', 'Nome',['class'=>'col-sm-1 col-form-label']) }}
-                        {{ Form::text('name', $state->name) }}
+                        {{ Form::text('name', $state->name, ['class' => 'form-control col-3','required']) }}
 
-                        <br /><br />
+                        @if ($errors->has('name'))
+                            <div class="error" style="color: red">{{ $errors->first('name') }}</div>
+                        @endif
 
                         {{ Form::label('initials', 'Sigla',['class'=>'col-sm-1 col-form-label']) }}
-                        {{ Form::text('initials', $state->initials) }}
+                        {{ Form::text('initials', $state->initials,['class' => 'form-control col-3','required']) }}
 
-                        <br/><br/>
+                        @if ($errors->has('initials'))
+                            <div class="error" style="color: red">{{ $errors->first('initials') }}</div>
+                        @endif
 
+                        <br/>
 
-                        {!!Form::submit('Salvar',['class'=>'btn btn-primary'])!!}
-                       
-
+                        {!!Form::submit('Salvar',['class'=>'btn btn-outline-primary col-2'])!!}
                     {!! Form::close() !!}
-</div>
                 </div>
             </div>
         </div>

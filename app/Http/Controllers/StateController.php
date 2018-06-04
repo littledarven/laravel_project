@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\State;
+use App\Http\Requests\StateRequest;
 
 class StateController extends Controller
 {
@@ -20,7 +21,7 @@ class StateController extends Controller
     {
         return view('states/new');
     }
-    public function store(Request $request)
+    public function store(StateRequest $request)
     {
         $state = new State;
         $state->name = $request->input('name');
@@ -41,7 +42,7 @@ class StateController extends Controller
         return view('states/edit', ['state' => $state]);
 
     }
-    public function update(Request $request, $id) {
+    public function update(StateRequest $request, $id) {
         $state = State::findOrFail($id);
         $state->name = $request->input('name');
         $state->initials = $request->input('initials');

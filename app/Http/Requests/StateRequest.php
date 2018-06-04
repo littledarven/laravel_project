@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\City;
 
-class CityRequest extends FormRequest
+class StateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,17 +25,16 @@ class CityRequest extends FormRequest
     {
         return [
             'name' => 'required|max:100|string',
-            'citizens' => 'required|numeric',    
-            'states' => 'required',
+            'initials' => 'required|max:3|alpha',    
         ];
     }
     public function messages()
     {
         return [            
             'name.max' => 'O nome deve conter no máximo cem caracteres !',
-            'name.string' => 'O nome só pode conter letras !',
-            'citizens.numeric' => 'O número de habitantes deve conter apenas dígitos !',
-            'states.required' => 'Por favor selecione um estado !',
+            'name.alpha' => 'O nome só pode conter letras !',
+            'initials.max' => 'A sigla deve conter no máximo três caracteres !',
+            'initials.alpha' => 'O nome só pode conter letras !',
         ];
     }
 }

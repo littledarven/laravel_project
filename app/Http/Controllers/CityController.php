@@ -15,9 +15,8 @@ class CityController extends Controller
     }
     public function index()
     {
-        $cities = City::all();
-        $state = State::with('cities')->get();
-        return view('cities/index',['cities'=>$cities],['state'=>$state]);
+        $cities = City::with('states')->get();
+        return view('cities/index',['cities'=>$cities]);
     }
     public function create()
     {
@@ -31,14 +30,14 @@ class CityController extends Controller
             \Session::flash('status','Não é possível cadastrar uma cidade sem ter ao menos um estado cadastrado antes !');
             return redirect('/cities');
         }
-       
     }
     public function store(CityRequest $request) 
     {
         $city = new City;
         $city->name = $request->input('name');
         $city->citizens = $request->input('citizens');
-        $city->state_id = $request->input('states');        
+        $city->state_id = $request->input('states');  
+        echo $city;      
         if ($city->save()) 
         {
             \Session::flash('status', 'Cidade cadastrada com sucesso !');
@@ -47,8 +46,8 @@ class CityController extends Controller
         } 
         else 
         {
-              \Session::flash('status', 'Ocorreu um erro ao cadastrar a cidade !');
-             return view('cities/new');
+            \Session::flash('status', 'Ocorreu um erro ao cadastrar a cidade !');
+            return view('cities/new');
         } 
         
     }
@@ -59,13 +58,12 @@ class CityController extends Controller
         return view('cities/edit', ['city' => $city],['states'=>$states]);
 
     }
-    public function update(Request $request, $id) 
+    public function update(CityRequest $request, $id) 
     {
         $city = City::findOrFail($id);
         $city->name = $request->input('name');
         $city->citizens = $request->input('citizens');
         $city->state_id = $request->input('states');
-        DB::select('exec total_citizens(?)',array($city->state_id));
         if ($city->save()) 
         {
             \Session::flash('status', 'Cidade atualizada com sucesso !');

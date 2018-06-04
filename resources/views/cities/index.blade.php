@@ -25,10 +25,11 @@
                             <th>Ferramentas</th>
                         </tr>
                         @foreach($cities as $city)
-                            <tr>
+                        
+                        <tr>
                                 <td>{{ $city->id }}</td>
                                 <td>{{ $city->name }}</td>
-                                <td>{{ $state[($city->state_id)-1]->name}}</td>
+                                <td>{{ $city->states->name}}</td>
                                 <td>{{ $city->citizens }}</td>
                                 <td>
                                 <div id="buttons">
@@ -39,6 +40,8 @@
                                 </div>
                                 </td>
                             </tr>
+
+
                         @endforeach
                     </table>
                 </div>

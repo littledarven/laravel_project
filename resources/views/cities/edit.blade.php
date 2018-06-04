@@ -15,28 +15,33 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="form-group">
-                    {!! Form::open(['url' => "/cities/$city->id", 'method' => 'put'],['class'=>'form-group']) !!}
+                    {!! Form::open(['url' => "/cities/$city->id", 'method' => 'put', 'class'=>'form-group col-10']) !!}
                         
-                        {{ Form::label('name', 'Nome',['class'=>'col-sm-2 col-form-label']) }}
-                        {{ Form::text('name', $city->name) }}
+                        {{ Form::label('name', 'Nome',['class'=>'col-sm-6 col-form-label']) }}
+                        {{ Form::text('name', $city->name, ['class' => 'form-control col-3','required']) }}
+                        
+                        @if ($errors->has('name'))
+                            <div class="error" style="color: red">{{ $errors->first('name') }}</div>
+                        @endif
 
-                        <br /><br />
+                        {{ Form::label('citizens', 'Nº de Habitantes',['class'=>'col-sm-6 col-form-label']) }}
+                        {{ Form::text('citizens', $city->citizens, ['class' => 'form-control col-3','required']) }}
+                        
+                        @if ($errors->has('citizens'))
+                            <div class="error" style="color: red">{{ $errors->first('citizens') }}</div>
+                        @endif
 
-                        {{ Form::label('citizens', 'Nº de Habitantes',['class'=>'col-sm-1 col-form-label']) }}
-                        {{ Form::text('citizens', $city->citizens) }}
-
+                        {{ Form::label('state', 'Estado',['class'=>'col-sm-6 col-form-label']) }}
+                        <br/>
+                        {!! Form::select('states', $states, $city->state_id, ['class'=>' form-control col-3 btn btn-light dropdown-toggle'])!!}
                         <br/><br/>
-                        {{ Form::label('state', 'Estado',['class'=>'col-sm-1 col-form-label']) }}
-                        {!! Form::select('states', $states, $city->state_id)!!}
+
+                        @if ($errors->has('states'))
+                            <div class="error" style="color: red">{{ $errors->first('states') }}</div>
+                        @endif
                         
-                        <br /><br />
-
-                        {!!Form::submit('Salvar',['class'=>'btn btn-outline-success'])!!}
-                       
-
+                        {!!Form::submit('Salvar',['class'=>'btn btn-outline-primary col-2'])!!}
                     {!! Form::close() !!}
-</div>
                 </div>
             </div>
         </div>
